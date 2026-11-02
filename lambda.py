@@ -38,3 +38,16 @@ def detect():
             or not BACKUPS.is_dir() or BACKUPS.is_symlink()):
         print("Run setup first, or check the folder.")
         return
+
+    for name, original in SAMPLES.items():
+        file = FILES / name
+        backup = BACKUPS / name
+        if file.is_symlink() or backup.is_symlink():
+            print("Unsafe shortcut found. Terminating Lambda.")
+            return
+        if not backup.is_file() or backup.read_text(encoding="utf-8") != original:
+            print("Backup missing or changed. Terminating Lambda.")
+            return
+        if file.exists() and not file.is_file():
+            print("Unexpected practice file. Terminating Lambda.")
+            return
