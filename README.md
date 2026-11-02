@@ -22,25 +22,44 @@ Prevents the simulator from overwriting unexpected file contents.
 ## Installation and Usage
 1. Download or clone the repository and open the project folder in a terminal.
 2. Set up the environment.
+3. 
 `python lambda.py setup`
+
 1. Simulate an incident.
+2. 
 `python lambda.py simulate`
+
 Detected
 1. Detect the changes.
+2. 
 `python lambda.py detect`
+
 Example output:
+
 `LAMBDA ALERT: employees.txt changed or missing`
+
 `LAMBDA ALERT: budget.txt changed or missing`
+
 `LAMBDA ALERT: project.txt changed or missing`
+
 1. Recover the files.
+2. 
 `python lambda.py recover`
+
 Example output:
+
 `RESTORED: employees.txt`
+
 `RESTORED: budget.txt`
+
 `RESTORED: project.txt`
+
 `OK: employees.txt`
+
 `OK: budget.txt`
+
 `OK: project.txt`
+
 The program restores the original files and verifies their SHA-256 hashes with their respective backups.
 
 ## My Findings
