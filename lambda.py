@@ -52,6 +52,10 @@ def safe_lab():
             return False
     return True
 
+def simulate():
+    if not safe_lab():
+        return
+    
     for name in SAMPLES:
         if fingerprint(FILES / name) != fingerprint(BACKUPS / name):
             print("LAMBDA ALERT:", name, "changed or missing")
