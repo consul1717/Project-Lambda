@@ -56,11 +56,15 @@ def simulate():
     if not safe_lab():
         return
     
+    for name, original in SAMPLES.items():
+        file = FILES / name
+        if not file.is_file() or file.read_text(encoding="utf-8") != original:
+            print("Files have changed. Terminating LAMBDA.")
+            return
+
     for name in SAMPLES:
-        if fingerprint(FILES / name) != fingerprint(BACKUPS / name):
-            print("LAMBDA ALERT:", name, "changed or missing")
-        else:
-            print("OK:", name)
+        (FILES / name).write_text(DAMAGED, encoding="utf-8")
+        print("SIMULATED DAMAGE:", name)
 
 if len(sys.argv) != 2:
     print("Use: python lambda.py setup | detect")
