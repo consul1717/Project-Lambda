@@ -32,3 +32,9 @@ def setup():
         (BACKUPS / name).write_text(text, encoding="utf-8")
     print("Files and backups created.")
 
+def detect():
+    if (LAB.is_symlink() or not MARKER.is_file() or MARKER.is_symlink()
+            or not FILES.is_dir() or FILES.is_symlink()
+            or not BACKUPS.is_dir() or BACKUPS.is_symlink()):
+        print("Run setup first, or check the folder.")
+        return
