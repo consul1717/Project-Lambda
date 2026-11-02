@@ -74,7 +74,7 @@ def detect():
         else:
             print("OK:", name)
 
-def recover ():
+def recover():
     if not safe_lab():
         return
     for name, original in SAMPLES.items():
@@ -95,5 +95,7 @@ elif sys.argv[1] == "simulate":
     simulate()
 elif sys.argv[1] == "detect":
     detect()
+elif sys.argv[1] == "recover":
+    recover()
 else:
     print("Unknown command.")
