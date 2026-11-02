@@ -17,3 +17,8 @@ def fingerprint(file):
     if not file.is_file():
         return None
     return hashlib.sha256(file.read_bytes()).hexdigest()
+
+def setup():
+    if LAB.exists() or LAB.is_symlink():
+        print("Lab already exists. Please remove it before setting up again.")
+        return
