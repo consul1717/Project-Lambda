@@ -51,3 +51,9 @@ def detect():
         if file.exists() and not file.is_file():
             print("Unexpected practice file. Terminating Lambda.")
             return
+
+    for name in SAMPLES:
+        if fingerprint(FILES / name) != fingerprint(BACKUPS / name):
+            print("LAMBDA ALERT:", name, "changed or missing")
+        else:
+            print("OK:", name)
