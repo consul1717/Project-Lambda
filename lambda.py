@@ -26,3 +26,9 @@ def setup():
     FILES.mkdir(parents=True)
     BACKUPS.mkdir()
     MARKER.write_text("Lambda Practice Lab", encoding="utf-8")
+
+    for name, text in SAMPLES.items():
+        (FILES / name).write_text(text, encoding="utf-8")
+        (BACKUPS / name).write_text(text, encoding="utf-8")
+    print("Files and backups created.")
+
