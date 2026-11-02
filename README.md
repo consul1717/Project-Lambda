@@ -22,16 +22,15 @@ Prevents the simulator from overwriting unexpected file contents.
 ## Installation and Usage
 1. Download or clone the repository and open the project folder in a terminal.
 2. Set up the environment.
-3. 
+
 `python lambda.py setup`
 
 1. Simulate an incident.
-2. 
+
 `python lambda.py simulate`
 
-Detected
-1. Detect the changes.
-2. 
+2. Detect the changes.
+
 `python lambda.py detect`
 
 Example output:
@@ -42,8 +41,8 @@ Example output:
 
 `LAMBDA ALERT: project.txt changed or missing`
 
-1. Recover the files.
-2. 
+3. Recover the files.
+
 `python lambda.py recover`
 
 Example output:
