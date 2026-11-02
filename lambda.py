@@ -12,7 +12,7 @@ SAMPLES = {
     "budget.txt": "January: 10000\nFebruary: 12000\nMarch: 9000\nApril: 11000\nMay: 13000\nJune: 9500\nJuly: 10500\nAugust: 11500\nSeptember: 12500\nOctober: 13500\nNovember: 14500\nDecember: 15500\n",
     "project.txt": "Project A: In Progress\nProject B: Completed\nProject C: Not Started\nProject D: In Progress\nProject E: Completed\nProject F: Not Started\nProject G: In Progress\nProject H: Completed\nProject I: Not Started\nProject J: In Progress\n"
 }
-DAMAGED = "File unavailable.\n"
+DAMAGED = "FILE CORRUPTED.\n"
 
 def fingerprint(file):
     if not file.is_file():
@@ -65,6 +65,15 @@ def simulate():
     for name in SAMPLES:
         (FILES / name).write_text(DAMAGED, encoding="utf-8")
         print("SIMULATED DAMAGE:", name)
+
+def detect():
+    if not safe_lab():
+        return
+    for name in SAMPLES:
+        if fingerprint(FILES / name) != fingerprint(BACKUPS / name):
+            print("LAMBDA ALERT:", name, "changed or missing")
+        else:
+            print("OK:", name)
 
 if len(sys.argv) != 2:
     print("Use: python lambda.py setup | simulate | detect")
