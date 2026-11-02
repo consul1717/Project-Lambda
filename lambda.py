@@ -76,7 +76,7 @@ def detect():
             print("OK:", name)
 
 if len(sys.argv) != 2:
-    print("Use: python lambda.py setup | simulate | detect")
+    print("Lambda use: python lambda.py setup | simulate | detect")
 elif sys.argv[1] == "setup":
     setup()
 elif sys.argv[1] == "simulate":
