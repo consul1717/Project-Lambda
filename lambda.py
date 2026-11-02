@@ -67,9 +67,11 @@ def simulate():
         print("SIMULATED DAMAGE:", name)
 
 if len(sys.argv) != 2:
-    print("Use: python lambda.py setup | detect")
+    print("Use: python lambda.py setup | simulate | detect")
 elif sys.argv[1] == "setup":
     setup()
+elif sys.argv[1] == "simulate":
+    simulate()
 elif sys.argv[1] == "detect":
     detect()
 else:
