@@ -22,3 +22,7 @@ def setup():
     if LAB.exists() or LAB.is_symlink():
         print("Lab already exists. Please remove it before setting up again.")
         return
+
+    FILES.mkdir(parents=True)
+    BACKUPS.mkdir()
+    MARKER.write_text("Lambda Practice Lab", encoding="utf-8")
