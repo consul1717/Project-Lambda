@@ -74,6 +74,19 @@ def detect():
         else:
             print("OK:", name)
 
+def recover ():
+    if not safe_lab():
+        return
+    for name, original in SAMPLES.items():
+        file = FILES / name
+        if file.exists() and file.read_text(encoding="utf-8") not in (original, DAMAGED):
+            print("Unexpected contents. Terminating LAMBDA.")
+            return
+    for name in SAMPLES:
+        (FILES / name).write_bytes((BACKUPS / name).read_bytes())
+        print("RESTORED:", name)
+    detect()
+
 if len(sys.argv) != 2:
     print("Lambda use: python lambda.py setup | simulate | detect")
 elif sys.argv[1] == "setup":
