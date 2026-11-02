@@ -25,11 +25,11 @@ Prevents the simulator from overwriting unexpected file contents.
 
 `python lambda.py setup`
 
-1. Simulate an incident.
+3. Simulate an incident.
 
 `python lambda.py simulate`
 
-2. Detect the changes.
+4. Detect the changes.
 
 `python lambda.py detect`
 
@@ -41,7 +41,7 @@ Example output:
 
 `LAMBDA ALERT: project.txt changed or missing`
 
-3. Recover the files.
+5. Recover the files.
 
 `python lambda.py recover`
 
