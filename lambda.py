@@ -23,35 +23,34 @@ def setup():
     if LAB.exists() or LAB.is_symlink():
         print("Lab already exists. Please remove it before setting up again.")
         return
-
     FILES.mkdir(parents=True)
     BACKUPS.mkdir()
     MARKER.write_text("Lambda Practice Lab", encoding="utf-8")
-
     for name, text in SAMPLES.items():
         (FILES / name).write_text(text, encoding="utf-8")
         (BACKUPS / name).write_text(text, encoding="utf-8")
     print("Files and backups created.")
 
-def detect():
+def safe_lab():
     if (LAB.is_symlink() or not MARKER.is_file() or MARKER.is_symlink()
             or not FILES.is_dir() or FILES.is_symlink()
             or not BACKUPS.is_dir() or BACKUPS.is_symlink()):
         print("Run setup first, or check the folder.")
-        return
+        return False
 
     for name, original in SAMPLES.items():
         file = FILES / name
         backup = BACKUPS / name
         if file.is_symlink() or backup.is_symlink():
             print("Unsafe shortcut found. Terminating LAMBDA.")
-            return
+            return False
         if not backup.is_file() or backup.read_text(encoding="utf-8") != original:
             print("Backup missing or changed. Terminating LAMBDA.")
-            return
+            return False
         if file.exists() and not file.is_file():
             print("Unexpected practice file. Terminating LAMBDA.")
-            return
+            return False
+    return True
 
     for name in SAMPLES:
         if fingerprint(FILES / name) != fingerprint(BACKUPS / name):
