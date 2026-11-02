@@ -14,6 +14,28 @@ SAMPLES = {
 }
 DAMAGED = "FILE CORRUPTED.\n"
 
+def safe_lab():
+    if not MARKER.is_file() or not FILES.is_dir() or not BACKUPS.is_dir():
+        print("Run `python lambda.py setup` first.")
+        return False
+
+    paths = [LAB, FILES, BACKUPS, MARKER]
+    paths += [folder / name for folder in (FILES, BACKUPS) for name in SAMPLES]
+    if any(path.is_symlink() for path in paths):
+        print("Unsafe shortcut found. Terminating LAMBDA.")
+        return False
+
+    for name, text in SAMPLES.items():
+        backup = BACKUPS / name
+        file = FILES / name
+        if not backup.is_file() or backup.read_text(encoding="utf-8") != text:
+            print("Original backup is missing or changed. Terminating LAMBDA.")
+            return False
+        if file.exists() and not file.is_file():
+            print("Unexpected file. Terminating LAMBDA")
+            return False
+    return True
+
 def fingerprint(file):
     if not file.is_file():
         return None
@@ -31,37 +53,14 @@ def setup():
         (BACKUPS / name).write_text(text, encoding="utf-8")
     print("Files and backups created.")
 
-def safe_lab():
-    if (LAB.is_symlink() or not MARKER.is_file() or MARKER.is_symlink()
-            or not FILES.is_dir() or FILES.is_symlink()
-            or not BACKUPS.is_dir() or BACKUPS.is_symlink()):
-        print("Run setup first, or check the folder.")
-        return False
-
-    for name, original in SAMPLES.items():
-        file = FILES / name
-        backup = BACKUPS / name
-        if file.is_symlink() or backup.is_symlink():
-            print("Unsafe shortcut found. Terminating LAMBDA.")
-            return False
-        if not backup.is_file() or backup.read_text(encoding="utf-8") != original:
-            print("Backup missing or changed. Terminating LAMBDA.")
-            return False
-        if file.exists() and not file.is_file():
-            print("Unexpected practice file. Terminating LAMBDA.")
-            return False
-    return True
-
 def simulate():
     if not safe_lab():
         return
-    
     for name, original in SAMPLES.items():
         file = FILES / name
         if not file.is_file() or file.read_text(encoding="utf-8") != original:
             print("Files have changed. Terminating LAMBDA.")
             return
-
     for name in SAMPLES:
         (FILES / name).write_text(DAMAGED, encoding="utf-8")
         print("SIMULATED DAMAGE:", name)
