@@ -57,3 +57,12 @@ def detect():
             print("LAMBDA ALERT:", name, "changed or missing")
         else:
             print("OK:", name)
+
+if len(sys.argv) != 2:
+    print("Use: python lambda.py setup | detect")
+elif sys.argv[1] == "setup":
+    setup()
+elif sys.argv[1] == "detect":
+    detect()
+else:
+    print("Unknown command.")
