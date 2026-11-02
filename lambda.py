@@ -43,13 +43,13 @@ def detect():
         file = FILES / name
         backup = BACKUPS / name
         if file.is_symlink() or backup.is_symlink():
-            print("Unsafe shortcut found. Terminating Lambda.")
+            print("Unsafe shortcut found. Terminating LAMBDA.")
             return
         if not backup.is_file() or backup.read_text(encoding="utf-8") != original:
-            print("Backup missing or changed. Terminating Lambda.")
+            print("Backup missing or changed. Terminating LAMBDA.")
             return
         if file.exists() and not file.is_file():
-            print("Unexpected practice file. Terminating Lambda.")
+            print("Unexpected practice file. Terminating LAMBDA.")
             return
 
     for name in SAMPLES:
